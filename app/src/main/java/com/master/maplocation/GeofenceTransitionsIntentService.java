@@ -4,25 +4,15 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
-import java.util.List;
 
-import static com.google.android.gms.internal.zzt.TAG;
-
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
- */
 public class GeofenceTransitionsIntentService extends IntentService {
     private static final String TAG = "GeofenceTransitions";
 
@@ -37,8 +27,6 @@ public class GeofenceTransitionsIntentService extends IntentService {
 
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         if (geofencingEvent.hasError()) {
-            //String errorMessage = GeofenceErrorMessages.getErrorString(this,
-            //      geofencingEvent.getErrorCode());
             Log.e(TAG, "Goefencing Error " + geofencingEvent.getErrorCode());
             return;
         }
@@ -46,13 +34,11 @@ public class GeofenceTransitionsIntentService extends IntentService {
         // Get the transition type.
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
-        Log.i(TAG, "geofenceTransition = " + geofenceTransition + " Enter : " + Geofence.GEOFENCE_TRANSITION_ENTER + "Exit : " + Geofence.GEOFENCE_TRANSITION_EXIT);
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL){
-            showNotification("Entered", "Entered the Location");
+            showNotification("Entrando", "Has entrado al Campus Sur");
         }
         else if(geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-            Log.i(TAG, "Showing Notification...");
-            showNotification("Exited", "Exited the Location");
+            showNotification("Saliendo", "Has salido del Campus Sur");
         } else {
             // Log the error.
             showNotification("Error", "Error");
@@ -73,8 +59,8 @@ public class GeofenceTransitionsIntentService extends IntentService {
 
         // 3. Create and send a notification
         Notification notification = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Title")
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle(text)
                 .setContentText(text)
                 .setContentIntent(pendingNotificationIntent)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(bigText))
