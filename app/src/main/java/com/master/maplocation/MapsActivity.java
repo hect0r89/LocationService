@@ -258,7 +258,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (mGoogleApiClient == null) {
                             buildGoogleApiClient();
                         }
-                        mMap.setMyLocationEnabled(true);
+                       
                     }
 
                 } else {
